@@ -1,0 +1,5 @@
+{
+  "fromAccount": "#{fromAccount}",
+  "toAccount": "#{toAccount}",
+  "amount": #{amount}
+}

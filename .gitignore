@@ -1,0 +1,182 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# JAVA / MAVEN / SPRING BOOT
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle (если будет использоваться)
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Spring Boot
+*.log
+logs/
+spring-boot.log
+
+# Java Class Files
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# IDE / EDITOR
+# ═══════════════════════════════════════════════════════════════════════════
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+.idea_modules/
+
+# Eclipse
+.classpath
+.project
+.settings/
+.bin/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Other IDEs
+*.swp
+*.swo
+*~
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# GATLING
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Gatling simulation results (генерируются после каждого запуска)
+target/gatling/
+gatling-results/
+*.log
+
+# Gatling recorder
+recorder.conf
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# OS / SYSTEM
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.fuse_hidden*
+.Trash-*
+.nfs*
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# ENVIRONMENT / SECRETS
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.env
+
+# Secrets / Credentials
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Config files with sensitive data (оставляем шаблоны)
+*-local.properties
+*-private.properties
+application-local.yml
+application-local.yaml
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# DOCUMENTATION / REPORTS (опционально)
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Generated documentation
+docs/reports/
+docs/images/temp/
+*.pdf (если генерируются автоматически)
+
+# Coverage reports
+coverage/
+jacoco/
+site/
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# TEMPORARY FILES
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Temp files
+tmp/
+temp/
+*.tmp
+*.bak
+*.old
+
+# Archives (если не нужны в репозитории)
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# WHAT TO KEEP (явное разрешение)
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Keep Maven wrapper (если используется)
+!.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.properties
+
+# Keep config templates
+!src/main/resources/config/*.properties
+!src/main/resources/bodies/**/*.json
+
+# Keep documentation
+!docs/*.md
+!README.md
