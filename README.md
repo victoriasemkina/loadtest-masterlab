@@ -128,7 +128,7 @@ mvn gatling:test
 ```
 Конкретная симуляция
 ```bash
-mvn gatling:test "-Dgatling.simulations=simulations.simulations.load.ApiLoadSimulation"
+mvn gatling:test "-Dgatling.simulations=simulations.simulations.load.TransferLoadSimulation"
 ```
 Проверка API вручную
 ```bash
