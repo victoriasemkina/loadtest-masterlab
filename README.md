@@ -30,25 +30,16 @@
 
 ## 📖 О проекте
 
-**LoadTest MasterLab** — это учебный проект для освоения нагрузочного тестирования REST API с использованием **Gatling** на **Java DSL**.
+**LoadTest MasterLab** — это **персональная демонстрационная версия** реального проекта, который я успешно внедрила и поддерживаю в своей компании.
 
-### Цели проекта
+### 🔐 Почему этот репозиторий
 
-- ✅ Освоить Gatling Java API для написания тестов как код
-- ✅ Изучить профессиональную архитектуру проекта для нагрузочных тестов
-- ✅ Получить опыт тестирования реального Spring Boot приложения
-- ✅ Создать портфолио для позиции **QA Backend / Lead QA**
-
-### Ключевые возможности
-
-| Возможность | Описание |
-|------------|----------|
-| **Java DSL** | Тесты пишутся на Java, а не на Scala |
-| **Enterprise-архитектура** | Разделение по слоям: config, scenarios, assertions |
-| **Динамические данные** | Gatling EL для подстановки значений (`#{postIds.random()}`) |
-| **Глобальные assertions** | Проверки для интеграции в CI/CD |
-| **Конфигурация** | Вынос эндпоинтов в `.properties` файлы |
-| **Отчётность** | HTML-отчёты с графиками и статистикой |
+| Вопрос | Ответ |
+|--------|-------|
+| **Это реальный проект?** | ✅ Да, я работаю с этим в продакшене |
+| **Почему не оригинал?** | 🔒 NDA — не могу раскрывать код компании |
+| **Что отличается?** | Сохранена вся сложность (5 ручек в цепочке, 80/20 нагрузка), заменены только имена и данные |
+| **Можно ли использовать?** | ✅ Да, это мой персональный код для портфолио |
 
 ---
 
@@ -119,6 +110,7 @@ mvn clean compile
 cd app
 mvn spring-boot:run
 ```
+Или запустить приложение по кнопке "run" возле `main` в классе `LoadTestApplication`
 Приложение будет доступно на `http://localhost:8080`
 
 ### 🧪 Запуск тестов
@@ -143,67 +135,3 @@ Invoke-RestMethod -Uri "http://localhost:8080/api/posts" -Method Post `
 
 ### Отчёт Gatling
 После запуска тестов отчёт сохраняется автоматически: `file:///C:/Users/{user}/Downloads/loadtest-masterlab/target/gatling/gatling-{timestamp}/index.html`
-
----
-
-## 🏗 Архитектура
-Слои проекта
-```text
-┌─────────────────────────────────────────────────────────┐
-│                    Simulations (Entry Points)           │
-│              smoke/, load/, endurance/                  │
-├─────────────────────────────────────────────────────────┤
-│                    Scenarios (Business Logic)           │
-│              post/, user/, comment/                     │
-├─────────────────────────────────────────────────────────┤
-│                    Protocol (HTTP Configuration)        │
-│              HttpProtocolFactory                        │
-├─────────────────────────────────────────────────────────┤
-│                    Config (Settings & Endpoints)        │
-│              ApiConfig, ApiEndpoints                    │
-├─────────────────────────────────────────────────────────┤
-│                    Core (Base Classes)                  │
-│              BaseSimulation                             │
-└─────────────────────────────────────────────────────────┘
-```
-## 🔑 Ключевые классы проекта
-
-| Класс | Путь | Назначение |
-|-------|------|-----------|
-| `ApiConfig.java` | `src/main/java/simulations/config/` | Универсальный класс для чтения `.properties` файлов. Предоставляет методы `getPropertyByKey()`, `getIntPropertyByKey()` для получения конфигурации |
-| `ApiEndpoints.java` | `src/main/java/simulations/config/` | Enum всех эндпоинтов API. Каждый эндпоинт имеет ключ для получения значения из конфига. Методы: `getValue()`, `getIntValue()` |
-| `HttpProtocolFactory.java` | `src/main/java/simulations/protocol/` | Фабрика для создания HTTP протоколов. Настраивает базовый URL, заголовки, таймауты через `gatling.conf` |
-| `BaseSimulation.java` | `src/main/java/simulations/core/` | Базовый класс для всех симуляций. Предоставляет метод `httpProtocol()` для наследования |
-| `PostScenarios.java` | `src/main/java/simulations/scenarios/post/` | Сценарии для работы с постами: `getAllPosts()`, `getPostById()`, `createPost()`, `fullPostLifecycle()` |
-| `UserScenarios.java` | `src/main/java/simulations/scenarios/user/` | Сценарии для работы с пользователями: `getAllUsers()`, `getUserById()`, `fullUserLifecycle()` |
-| `GlobalAssertions.java` | `src/main/java/simulations/assertions/` | Глобальные assertions для CI/CD. Метод `standardAssertions()` возвращает массив проверок (response time, failed requests) |
-| `ApiLoadSimulation.java` | `src/main/java/simulations/simulations/load/` | Точка входа для нагрузочного теста. Определяет сценарий, инъекцию пользователей (ramp-up, steady, ramp-down), assertions |
-| `SmokeSimulation.java` | `src/main/java/simulations/simulations/smoke/` | Точка входа для дымовых тестов. Быстрая проверка работоспособности API (1-2 минуты) |
-| `LoadTestApplication.java` | `app/src/main/java/.../loadtest/` | Главный класс Spring Boot приложения. Запускает тестовый API на порту 8080 |
-| `PostController.java` | `app/src/main/java/.../loadtest/controller/` | REST контроллер для работы с постами. Endpoints: GET, POST `/api/posts` |
-| `Post.java` | `app/src/main/java/.../loadtest/model/` | JPA Entity для таблицы posts. Поля: id, title, body, userId |
-| `PostRepository.java` | `app/src/main/java/.../loadtest/service/` | Spring Data JPA репозиторий для CRUD операций с постами |
-
----
-
-## 🔧 Расширение
-### Добавить новый сценарий
-1. Создать класс в `src/main/java/simulations/scenarios/{domain}/`
-2. Добавить методы `ChainBuilder` для сценариев 
-3. Использовать в симуляции через `.exec()`
-4. Добавить новый эндпоинт 
-5. Добавить ключ в `api-endpoints.properties` 
-6. Добавить enum в `ApiEndpoints.java` 
-7. Использовать в сценарии через `ApiEndpoints.ENDPOINT.getValue()`
-
-### Добавить Feeders (CSV данные)
-```java
-// В сценарии
-.exec(
-    http("POST /posts")
-        .post("/api/posts")
-        .body(ElFileBody("bodies/post/create-post.json")).asJson()
-        .check(status().is(201))
-)
-.feed(CsvFeederBuilder.csv("data/posts.csv").circular())
-```
