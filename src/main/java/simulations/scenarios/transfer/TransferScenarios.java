@@ -1,6 +1,7 @@
 package simulations.scenarios.transfer;
 
 import io.gatling.javaapi.core.ChainBuilder;
+import io.gatling.javaapi.core.ScenarioBuilder;
 import simulations.actions.TransferActions;
 import simulations.feeders.RandomDataFeeder;
 
@@ -14,18 +15,17 @@ public class TransferScenarios {
     /**
      * Сценарий 1: Только просмотр курсов (80% пользователей)
      */
-    public static ChainBuilder viewRatesOnly() {
-        return TransferActions.getRates();
-    }
+    public static ScenarioBuilder scnViewRates = scenario("View Rates (80%)")
+            .exec(TransferActions.getRates());
 
     /**
      * Сценарий 2: Полный цикл перевода (20% пользователей)
      */
-    public static ChainBuilder fullTransferFlow() {
-        return exec(TransferActions.getRates())
-                .exec(TransferActions.getAccounts())
-                .exec(TransferActions.validateTransfer())
-                .exec(TransferActions.executeTransfer())
-                .exec(TransferActions.checkTransferStatus());
+    public static ScenarioBuilder scnFullTransfer = scenario("Full Transfer (20%)")
+            .exec(TransferActions.getRates())
+            .exec(TransferActions.getAccounts())
+            .exec(TransferActions.validateTransfer())
+            .exec(TransferActions.executeTransfer())
+            .exec(TransferActions.checkTransferStatus());
     }
 }

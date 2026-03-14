@@ -48,22 +48,16 @@ public class StabilitySimulation extends BaseSimulation {
 
     private final StabilityTestConfig config = StabilityTestConfig.INSTANCE;
 
-    private final ScenarioBuilder scnViewRates = scenario("View Rates (80%)")
-            .exec(TransferScenarios.viewRatesOnly());
-
-    private final ScenarioBuilder scnFullTransfer = scenario("Full Transfer (20%)")
-            .exec(TransferScenarios.fullTransferFlow());
-
     {
         setUp(
-                scnViewRates.injectOpen(
+                TransferScenarios.scnViewRates.injectOpen(
                         rampUsersPerSec(1)
                                 .to(config.getSteadyUsersPerSec() * 8 / 10)
                                 .during(config.getRampUpDuration()),
                         constantUsersPerSec(config.getSteadyUsersPerSec() * 8 / 10)
                                 .during(config.getSteadyDuration())
                 ),
-                scnFullTransfer.injectOpen(
+                TransferScenarios.scnFullTransfer.injectOpen(
                         rampUsersPerSec(1)
                                 .to(2)
                                 .during(config.getRampUpDuration()),

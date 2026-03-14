@@ -50,18 +50,10 @@ public class SqueezeSimulation extends BaseSimulation {
     // Конфигурация Squeeze теста (оптимизация ресурсов)
     private final SqueezeTestConfig config = SqueezeTestConfig.INSTANCE;
 
-    // Сценарий 1: 80% пользователей — только просмотр курсов
-    private final ScenarioBuilder scnViewRates = scenario("View Rates (80%)")
-            .exec(TransferScenarios.viewRatesOnly());
-
-    // Сценарий 2: 20% пользователей — полный цикл перевода
-    private final ScenarioBuilder scnFullTransfer = scenario("Full Transfer (20%)")
-            .exec(TransferScenarios.fullTransferFlow());
-
     {
         setUp(
                 // 80% трафика: просмотр курсов
-                scnViewRates.injectOpen(
+                TransferScenarios.scnViewRates.injectOpen(
                         rampUsersPerSec(1)
                                 .to(config.getSteadyUsersPerSec() * 8 / 10)
                                 .during(config.getRampUpDuration()),
@@ -69,7 +61,7 @@ public class SqueezeSimulation extends BaseSimulation {
                                 .during(config.getSteadyDuration())
                 ),
                 // 20% трафика: полные переводы
-                scnFullTransfer.injectOpen(
+                TransferScenarios.scnFullTransfer.injectOpen(
                         rampUsersPerSec(1)
                                 .to(2)
                                 .during(config.getRampUpDuration()),

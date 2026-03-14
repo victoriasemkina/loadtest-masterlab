@@ -41,15 +41,9 @@ public class TransferLoadSimulation extends BaseSimulation {
 
     private final LoadTestConfig config = LoadTestConfig.INSTANCE;
 
-    private final ScenarioBuilder scnViewRates = scenario("View Rates (80%)")
-            .exec(TransferScenarios.viewRatesOnly());
-
-    private final ScenarioBuilder scnFullTransfer = scenario("Full Transfer (20%)")
-            .exec(TransferScenarios.fullTransferFlow());
-
     {
         setUp(
-                scnViewRates.injectOpen(
+                TransferScenarios.scnViewRates.injectOpen(
                         rampUsersPerSec(1)
                                 .to(config.getSteadyUsersPerSec() * 8 / 10)
                                 .during(config.getRampUpDuration()),
@@ -59,7 +53,7 @@ public class TransferLoadSimulation extends BaseSimulation {
                                 .to(0)
                                 .during(config.getRampDownDuration())
                 ),
-                scnFullTransfer.injectOpen(
+                TransferScenarios.scnFullTransfer.injectOpen(
                         rampUsersPerSec(1)
                                 .to(config.getSteadyUsersPerSec() * 2 / 10)
                                 .during(config.getRampUpDuration()),

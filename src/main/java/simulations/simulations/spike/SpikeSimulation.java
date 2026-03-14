@@ -48,22 +48,16 @@ public class SpikeSimulation extends BaseSimulation {
 
     private final SpikeTestConfig config = SpikeTestConfig.INSTANCE;
 
-    private final ScenarioBuilder scnViewRates = scenario("View Rates (80%)")
-            .exec(TransferScenarios.viewRatesOnly());
-
-    private final ScenarioBuilder scnFullTransfer = scenario("Full Transfer (20%)")
-            .exec(TransferScenarios.fullTransferFlow());
-
     {
         setUp(
-                scnViewRates.injectOpen(
+                TransferScenarios.scnViewRates.injectOpen(
                         constantUsersPerSec(8).during(Duration.ofMinutes(2)),
                         rampUsersPerSec(8).to(80).during(config.getRampUpDuration()),
                         constantUsersPerSec(80).during(config.getSteadyDuration()),
                         rampUsersPerSec(80).to(8).during(config.getRampDownDuration()),
                         constantUsersPerSec(8).during(Duration.ofMinutes(2))
                 ),
-                scnFullTransfer.injectOpen(
+                TransferScenarios.scnFullTransfer.injectOpen(
                         constantUsersPerSec(2).during(Duration.ofMinutes(2)),
                         rampUsersPerSec(2).to(20).during(config.getRampUpDuration()),
                         constantUsersPerSec(20).during(config.getSteadyDuration()),
